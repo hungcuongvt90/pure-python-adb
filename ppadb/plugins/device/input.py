@@ -15,8 +15,56 @@ class Source:
 
 
 class Input(Plugin):
+    def _escape_special_characters(self, text):
+        """
+        A helper that escape special characters
+
+        Args:
+            text: str
+        """
+        escaped = text.translate(
+            str.maketrans({
+                "-": r"\-",
+                "+": r"\+",
+                "[": r"\[",
+                "]": r"\]",
+                "(": r"\(",
+                ")": r"\)",
+                "{": r"\{",
+                "}": r"\}",
+                "\\": r"\\\\",
+                "^": r"\^",
+                "$": r"\$",
+                "*": r"\*",
+                ".": r"\.",
+                ",": r"\,",
+                ":": r"\:",
+                "~": r"\~",
+                ";": r"\;",
+                ">": r"\>",
+                "<": r"\<",
+                "%": r"\%",
+                "#": r"\#",
+                "\'": r"\\'",
+                "\"": r'\\"',
+                "`": r"\`",
+                "!": r"\!",
+                "?": r"\?",
+                "|": r"\|",
+                "=": r"\=",
+                "@": r"\@",
+                "/": r"\/",
+                "_": r"\_",
+                " ": r"%s",  # special
+                "&": r"\&"
+            }))
+        return escaped
+
     def input_text(self, string):
         return self.shell('input text "{}"'.format(string))
+    
+    def input_text_with_escapse_special_character(self, string):
+        return self.shell('input text "{}"'.format(self._escape_special_characters(string)))
 
     def input_keyevent(self, keycode, longpress=False):
         cmd = 'input keyevent {}'.format(keycode)
@@ -40,4 +88,4 @@ class Input(Plugin):
         return self.shell("input press")
 
     def input_roll(self, dx, dy):
-        return self.roll("roll {} {}".format(dx, dy))
+        return self.shell("roll {} {}".format(dx, dy))

@@ -10,12 +10,20 @@ from ppadb.plugins.device.wm import WM
 from ppadb.plugins.device.traffic import Traffic
 from ppadb.plugins.device.cpustat import CPUStat
 from ppadb.plugins.device.batterystats import BatteryStats
+from collections import namedtuple
+from json import loads
 
 from ppadb.sync import Sync
 
 from ppadb.utils.logger import AdbLogging
 
 from ppadb import InstallError
+
+WindowSize = namedtuple("WindowSize", ['width', 'height'])
+
+_DISPLAY_RE = re.compile(
+    r'.*DisplayViewport{.*?valid=true, .*?orientation=(?P<orientation>\d+), .*?deviceWidth=(?P<width>\d+), deviceHeight=(?P<height>\d+).*'
+)
 
 logger = AdbLogging.get_logger(__name__)
 

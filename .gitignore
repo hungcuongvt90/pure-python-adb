@@ -10,3 +10,4 @@ dist
 venv
 test_result.xml
 .python-version
+.env
