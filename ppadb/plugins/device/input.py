@@ -61,6 +61,9 @@ class Input(Plugin):
         return escaped
 
     def input_text(self, string):
+        return self.shell('input text "{}"'.format(string))
+    
+    def input_text_with_escapse_special_character(self, string):
         return self.shell('input text "{}"'.format(self._escape_special_characters(string)))
 
     def input_keyevent(self, keycode, longpress=False):
